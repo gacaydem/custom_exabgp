@@ -4,3 +4,5 @@ fghjfh
 cghvjh
 
 
+
+announce flow route {match { destination 9.9.9.9/32; source 101.96.88.0/24; destination-port =53; protocol udp; } then { discard;}}

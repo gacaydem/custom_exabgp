@@ -7,6 +7,6 @@
 ```
 
 #### Run script
-``` python3 argparse.py -c "312312.34242323 trhgfhgf.txt; fghfghghfghgh"
+``` python3 pharse1.py -c "announce flow route {match { destination 8.8.8.8/32; source 101.96.88.0/24; destination-port =53; protocol udp; } then { discard;}"
 
-NOTE: Hiện tại đang để  tự động xóa sau 30s, lưu vào file test1.txt. ( có thể sửa trong file )
+NOTE: Hiện tại đang để  tự động xóa sau 30s, lưu vào file test1.txt. ( có thể sửa trong file pharse1.py)

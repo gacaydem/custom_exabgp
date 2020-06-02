@@ -3,16 +3,14 @@ import sched
 import time
 import argparse
 
-parser = argparse.ArgumentParser(description='Check Edge Image')
-parser.add_argument("-c", dest="content", help="content what you want add to file")
+parser = argparse.ArgumentParser(description='custom exabgp')
+parser.add_argument("-d", dest="dest", help="destination packet")
+parser.add_argument("-s", dest="source", help="source packet")
+parser.add_argument("-dp", dest="dest_port", help="destination port")
+parser.add_argument("-p", dest="protocols", help="protocols")
 args = parser.parse_args()
 
 scheduler = sched.scheduler(time.time, time.sleep)
-
-def insert2file():
-    f = open('test1.txt', 'a')
-    f.write("\n" + args.content)
-    f.close()
 
 def delete2file(content):
     fin = open("test1.txt", "rt")
@@ -30,15 +28,17 @@ def delete2file(content):
     fin.close()
 
 now = time.time()
-insert2file()
+# insert2file()
+
+cmd = '''echo "announce flow route {match { destination %s; source %s; destination-port =%s; protocol %s; } then { discard;}}" >> ./test1.txt''' % (args.dest,args.source,args.dest_port,args.protocols)
+cmd_withdraw = '''echo "withdraw flow route {match { destination %s; source %s; destination-port =%s; protocol %s; } then { discard;}}" >> ./test1.txt''' % (args.dest,args.source,args.dest_port,args.protocols)
+os.system(cmd) 
+# os.system(cmd_withdraw)
 print ('START:', now)
-scheduler.enterabs(now+30, 1, delete2file, (args.content,))
+scheduler.enterabs(now+30, 1, os.system, (cmd_withdraw,))
 
 scheduler.run()
 
-
-# a= "announce flow route {match { destination 8.8.8.8/32; source 101.96.88.0/24; destination-port =53; protocol udp; } then { discard;}}"
-# print (a[80])
 
 
 
